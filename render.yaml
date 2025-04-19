@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: worker
     name: binance-top-funding-rate
     env: python
     buildCommand: pip install -r requirements.txt
