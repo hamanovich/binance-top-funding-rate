@@ -27,9 +27,9 @@ def send_telegram_message(message, symbol):
     }
     response = requests.post(url, data=payload)
     if response.status_code == 200:
-        print(f"Telegram message sent: {symbol}\n")
+        print(f"✅ Telegram message sent: {symbol}\n")
     else:
-        print(f"Error sending telegram message: {response.text}")
+        print(f"⛔️ Error sending telegram message: {response.text}")
 
 def on_message(_, message):
     global sent_notifications
@@ -55,10 +55,11 @@ def on_message(_, message):
 
                 if time_remaining.total_seconds() < TIME_TO_TELEGRAM_SEND and abs(funding_rate) > FUNDING_RATE_TO_TELEGRAM_SEND:
                     if symbol not in sent_notifications:
+                        direction_icon = "🔼" if funding_rate > 0 else "🔽"
                         message = (
                             f"⚠️ <b>{symbol}</b>\n"
-                            f"Funding Rate: <b>{funding_rate:.2f}%</b>\n"
-                            f"Next Funding in: <b>{time_remaining_str}</b>"
+                            f"{direction_icon} Funding Rate: <b><u>{funding_rate:.2f}%</u></b>\n"
+                            f"⏰ Next Funding in: <b>{time_remaining_str}</b>"
                         )
                         send_telegram_message(message, symbol)
                         sent_notifications[symbol] = True
@@ -73,7 +74,6 @@ def on_message(_, message):
         if top_amount:
             df = pd.DataFrame(top_amount)
             print(df.to_string(index=False))
-            print("\n")
     else:
         print("Wrong data format:", data)
 
