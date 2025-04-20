@@ -67,13 +67,14 @@ def on_message(_, message):
             if time_remaining.total_seconds() <= 0:
                 sent_notifications.pop(symbol, None)
 
-        sorted_data = sorted(processed_data, key=lambda x: abs(x['Funding Rate']), reverse=True)
+        # sorted_data = 
+        sorted(processed_data, key=lambda x: abs(x['Funding Rate']), reverse=True)
 
-        top_amount = sorted_data[:TOP_AMOUNT]
+        # top_amount = sorted_data[:TOP_AMOUNT]
 
-        if top_amount:
-            df = pd.DataFrame(top_amount)
-            print(df.to_string(index=False))
+        # if top_amount:
+        #     df = pd.DataFrame(top_amount)
+        #     print(df.to_string(index=False))
     else:
         print("Wrong data format:", data)
 
